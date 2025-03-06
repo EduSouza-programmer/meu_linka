@@ -37,6 +37,11 @@
             margin-bottom: 40px;
         }
 
+        .logo-image {
+        height: 160px; /* Ajuste a altura conforme necessário */
+        width: auto; /* Mantém a proporção da imagem */
+      }
+
         .logo h1 {
             color: #333;
             font-size: 28px;
@@ -194,7 +199,9 @@
 <body>
     <div class="container">
         <div class="logo">
-            <h1>Meu Linka</h1>
+            <a href="home.html" class="logo">
+                <img src="src/img/logo.webp" alt="Meu Linka" class="logo-image" />
+              </a>
         </div>
         
         <div class="social-login">
@@ -312,7 +319,7 @@
                     // Login bem-sucedido
                     alert('Login realizado com sucesso!');
                     // Aqui você redirecionaria para a página principal
-                    // window.location.href = 'dashboard.html';
+                    window.location.href = 'home.html';
                 } else {
                     // Login falhou
                     document.getElementById('login-error').textContent = 'E-mail ou senha incorretos.';
