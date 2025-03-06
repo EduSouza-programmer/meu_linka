@@ -527,15 +527,15 @@
           </div>
           <a href="home.html" class="logo">
             <img src="src/img/logo.webp" alt="Meu Linka" class="logo-image" />
-          </a>        </div>
+          </a>
+        </div>
         <div class="search-bar">
           <input
             type="text"
             placeholder="Buscar colaborador ou comunidade..."
           />
         </div>
-        <div class="user-menu">
-        </div>
+        <div class="user-menu"></div>
       </div>
     </header>
 
@@ -911,6 +911,12 @@
           window.location.href = 'home.html';
         }, 2000);
       }
+
+      document
+        .getElementById('cancel-btn')
+        .addEventListener('click', function () {
+          window.location.href = 'home.html';
+        });
     </script>
   </body>
 </html>
