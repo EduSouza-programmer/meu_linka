@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MeuLinka</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      body {
+        background: linear-gradient(135deg, #6a5af9 0%, #b56fe8 100%);
+        min-height: 100vh;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      header {
+        background-color: #ffffff;
+        color: #6a5af9;
+        padding: 15px 0;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        margin-bottom: 20px;
+      }
+
+      a {
+            text-decoration: none;
+        }
+
+      .header-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+
+      .logo {
+        text-decoration: none; /* Remove o sublinhado do link */
+        color: #6a5af9; /* Mantém a cor da logo */
+        font-size: 24px;
+        font-weight: bold;
+      }
+
+      .search-bar {
+        flex-grow: 1;
+        margin: 0 20px;
+      }
+
+      .search-bar input {
+        width: 100%;
+        padding: 10px 15px;
+        border-radius: 20px;
+        border: 1px solid #e0e0e0;
+        background-color: #f8f9fa;
+      }
+
+      .search-bar input:focus {
+        outline: none;
+        border-color: #6a5af9;
+        box-shadow: 0 0 0 2px rgba(106, 90, 249, 0.2);
+      }
+
+      .user-menu {
+        display: flex;
+        gap: 15px;
+      }
+
+      .user-menu button {
+        background-color: #6a5af9;
+        border: none;
+        color: white;
+        cursor: pointer;
+        font-size: 14px;
+        padding: 8px 16px;
+        border-radius: 20px;
+        transition: background-color 0.3s;
+      }
+
+      .user-menu button:hover {
+        background-color: #5346d7;
+      }
+
+      .main-content {
+        display: grid;
+        grid-template-columns: 250px 1fr 250px;
+        gap: 20px;
+      }
+
+      .sidebar {
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        padding: 15px;
+      }
+
+      .sidebar h3 {
+        margin-bottom: 15px;
+        color: #6a5af9;
+        font-weight: 600;
+      }
+
+      .menu-item {
+        padding: 10px;
+        border-radius: 5px;
+        margin-bottom: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        position: relative;
+      }
+
+      .menu-item:hover {
+        background-color: #f0f2f5;
+      }
+
+      .menu-item .tooltip {
+        visibility: hidden;
+        width: 200px;
+        background-color: #555;
+        color: #fff;
+        text-align: center;
+        border-radius: 6px;
+        padding: 8px;
+        position: absolute;
+        z-index: 1;
+        bottom: 125%;
+        left: 50%;
+        margin-left: -100px;
+        opacity: 0;
+        transition: opacity 0.3s;
+        font-size: 12px;
+      }
+
+      .menu-item .tooltip::after {
+        content: '';
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        margin-left: -5px;
+        border-width: 5px;
+        border-style: solid;
+        border-color: #555 transparent transparent transparent;
+      }
+
+      .menu-item:hover .tooltip {
+        visibility: visible;
+        opacity: 1;
+      }
+
+      .content {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .card {
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+      }
+
+      .card h2 {
+        color: #6a5af9;
+        margin-bottom: 15px;
+        font-weight: 600;
+      }
+
+      .banner {
+        background-color: white;
+        padding: 15px;
+        text-align: center;
+        border-radius: 8px;
+        font-weight: bold;
+        margin-bottom: 20px;
+        border-left: 4px solid #6a5af9;
+        color: #6a5af9;
+      }
+
+      .footer {
+        margin-top: 30px;
+        text-align: center;
+        color: white;
+        font-size: 14px;
+        padding: 20px 0;
+      }
+
+      /* Hamburger Menu Styles */
+      .hamburger-icon {
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        width: 24px;
+        height: 24px;
+        margin-right: 15px;
+      }
+
+      .hamburger-icon span {
+        display: block;
+        height: 3px;
+        width: 100%;
+        background-color: #6a5af9;
+        border-radius: 3px;
+      }
+
+      .hamburger-menu {
+        position: fixed;
+        top: 0;
+        left: -300px;
+        width: 300px;
+        height: 100%;
+        background-color: white;
+        z-index: 1000;
+        overflow-y: auto;
+        transition: left 0.3s ease;
+        box-shadow: 2px 0 15px rgba(0, 0, 0, 0.2);
+      }
+
+      .hamburger-menu.active {
+        left: 0;
+      }
+
+      .hamburger-header {
+        background-color: #6a5af9;
+        color: white;
+        padding: 15px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .close-menu {
+        cursor: pointer;
+        font-size: 24px;
+      }
+
+      .hamburger-content {
+        padding: 15px;
+      }
+
+      .function-category {
+        margin-bottom: 20px;
+      }
+
+      .function-category h3 {
+        color: #6a5af9;
+        margin-bottom: 10px;
+        border-bottom: 1px solid #e0e0e0;
+        padding-bottom: 5px;
+      }
+
+      .function-item {
+        padding: 10px;
+        border-radius: 5px;
+        margin-bottom: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        position: relative;
+      }
+
+      .function-item:hover {
+        background-color: #f0f2f5;
+      }
+
+      .function-item .tooltip {
+        visibility: hidden;
+        width: 200px;
+        background-color: #555;
+        color: #fff;
+        text-align: center;
+        border-radius: 6px;
+        padding: 8px;
+        position: absolute;
+        z-index: 1;
+        bottom: 125%;
+        left: 50%;
+        margin-left: -100px;
+        opacity: 0;
+        transition: opacity 0.3s;
+        font-size: 12px;
+      }
+
+      .function-item .tooltip::after {
+        content: '';
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        margin-left: -5px;
+        border-width: 5px;
+        border-style: solid;
+        border-color: #555 transparent transparent transparent;
+      }
+
+      .function-item:hover .tooltip {
+        visibility: visible;
+        opacity: 1;
+      }
+
+      .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 999;
+        display: none;
+      }
+
+      .overlay.active {
+        display: block;
+      }
+
+      .help-icon {
+        display: inline-block;
+        width: 16px;
+        height: 16px;
+        background-color: #6a5af9;
+        color: white;
+        border-radius: 50%;
+        text-align: center;
+        line-height: 16px;
+        font-size: 10px;
+        margin-left: 5px;
+        cursor: help;
+      }
+
+      .btn-primary {
+        background-color: #6a5af9;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 20px;
+        cursor: pointer;
+        font-weight: 500;
+        transition: background-color 0.3s;
+      }
+
+      .btn-primary:hover {
+        background-color: #5346d7;
+      }
+
+      @media (max-width: 768px) {
+        .main-content {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="overlay" id="overlay"></div>
+
+    <div class="hamburger-menu" id="hamburger-menu">
+      <div class="hamburger-header">
+        <h2>Funcionalidades</h2>
+        <div class="close-menu" id="close-menu">&times;</div>
+      </div>
+      <div class="hamburger-content">
+        <div class="function-category">
+          <h3>Perfil e Conta</h3>
+          <div class="function-item">
+            <a href="perfil.html">Visualizar Perfil</a>
+            <span class="tooltip"
+              >Veja informações detalhadas sobre seu perfil</span
+            >
+          </div>
+          <div class="function-item">
+            <a href="perfil.html">Excluir Perfil </a>
+            <span class="tooltip"
+              >Remova permanentemente seu perfil da plataforma</span
+            >
+          </div>
+          <div class="function-item">
+            Login
+            <span class="tooltip">Acesse sua conta na plataforma</span>
+          </div>
+          <div class="function-item">
+            Encerrar Minha Conta
+            <span class="tooltip"
+              >Desative sua conta e todos os dados associados</span
+            >
+          </div>
+        </div>
+
+        <div class="function-category">
+          <h3>Interações com Colaboradores</h3>
+          <div class="function-item">
+            Buscar Colaborador
+            <span class="tooltip">Encontre outros usuários na plataforma</span>
+          </div>
+          <div class="function-item">
+            Escrever um Recado para Colaborador
+            <span class="tooltip"
+              >Deixe uma mensagem pública no perfil de outro usuário</span
+            >
+          </div>
+          <div class="function-item">
+            Consultar Recados do Colaborador
+            <span class="tooltip"
+              >Veja todos os recados deixados por um usuário específico</span
+            >
+          </div>
+          <div class="function-item">
+            Apagar Recados
+            <span class="tooltip"
+              >Remova recados do seu perfil ou que você enviou</span
+            >
+          </div>
+          <div class="function-item">
+            Aceitar Colaborador como Amigo
+            <span class="tooltip"
+              >Aceite solicitações de amizade de outros usuários</span
+            >
+          </div>
+          <div class="function-item">
+            Exibir Amigos do Colaborador
+            <span class="tooltip"
+              >Veja a lista de amigos de um usuário específico</span
+            >
+          </div>
+          <div class="function-item">
+            Escrever um Depoimento para Amigo
+            <span class="tooltip"
+              >Deixe um depoimento no perfil de um amigo</span
+            >
+          </div>
+          <div class="function-item">
+            Aceitar ou Apagar um Depoimento
+            <span class="tooltip"
+              >Gerencie depoimentos recebidos em seu perfil</span
+            >
+          </div>
+          <div class="function-item">
+            Estabelecer Relacionamento com Colaborador
+            <span class="tooltip"
+              >Defina o tipo de relacionamento com outro usuário</span
+            >
+          </div>
+          <div class="function-item">
+            Finalizar Relacionamento com Amigo
+            <span class="tooltip"
+              >Remova um usuário da sua lista de amigos</span
+            >
+          </div>
+          <div class="function-item">
+            Ignorar Colaborador
+            <span class="tooltip"
+              >Bloqueie interações com um usuário específico</span
+            >
+          </div>
+        </div>
+
+        <div class="function-category">
+          <h3>Comunidades</h3>
+          <div class="function-item">
+            Criar Comunidade
+            <span class="tooltip"
+              >Crie uma nova comunidade para reunir pessoas com interesses em
+              comum</span
+            >
+          </div>
+          <div class="function-item">
+            Buscar Comunidade
+            <span class="tooltip"
+              >Encontre comunidades existentes na plataforma</span
+            >
+          </div>
+          <div class="function-item">
+            Entrar na Comunidade
+            <span class="tooltip">Torne-se membro de uma comunidade</span>
+          </div>
+          <div class="function-item">
+            Alterar dados da Comunidade
+            <span class="tooltip"
+              >Edite informações e configurações de uma comunidade que você
+              administra</span
+            >
+          </div>
+          <div class="function-item">
+            Relacionar Comunidades
+            <span class="tooltip"
+              >Estabeleça conexões entre comunidades relacionadas</span
+            >
+          </div>
+          <div class="function-item">
+            Expulsar Participante da Comunidade
+            <span class="tooltip"
+              >Remova um membro de uma comunidade que você administra</span
+            >
+          </div>
+          <div class="function-item">
+            Escrever no Fórum da Comunidade
+            <span class="tooltip"
+              >Publique mensagens no fórum de discussão da comunidade</span
+            >
+          </div>
+          <div class="function-item">
+            Consultar o Fórum da Comunidade
+            <span class="tooltip"
+              >Veja todas as discussões e tópicos de uma comunidade</span
+            >
+          </div>
+          <div class="function-item">
+            Moderar Fórum da Comunidade
+            <span class="tooltip"
+              >Gerencie mensagens e conteúdo no fórum como moderador</span
+            >
+          </div>
+        </div>
+
+        <div class="function-category">
+          <h3>Conteúdo e Mídia</h3>
+          <div class="function-item">
+            Criar Álbum de Fotos
+            <span class="tooltip"
+              >Crie coleções organizadas para suas fotos</span
+            >
+          </div>
+          <div class="function-item">
+            Subir, Remover Fotos do Álbum do Colaborador
+            <span class="tooltip">Adicione ou remova fotos de seus álbuns</span>
+          </div>
+          <div class="function-item">
+            Criar um Banner
+            <span class="tooltip"
+              >Crie banners personalizados para promoção</span
+            >
+          </div>
+          <div class="function-item">
+            Exibir um Banner (Anúncio)
+            <span class="tooltip"
+              >Publique um banner promocional na plataforma</span
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <header>
+      <div class="header-content">
+        <div style="display: flex; align-items: center">
+          <div class="hamburger-icon" id="hamburger-icon">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+          <a href="home.html" class="logo">Meu Linka</a>
+        </div>
+        <div class="search-bar">
+          <input
+            type="text"
+            placeholder="Buscar colaborador ou comunidade..."
+          />
+        </div>
+        <div class="user-menu">
+          <a href="perfil.html"><button>Perfil</button></a>
+          <button>Login</button>
+        </div>
+      </div>
+    </header>
+
+    <div class="container">
+      <div class="banner">
+        Bem-vindo ao MeuLinka! Conecte-se com amigos e comunidades!
+      </div>
+
+      <div class="main-content">
+        <div class="sidebar">
+          <h3>
+            Menu Principal
+            <div
+              class="help-icon"
+              title="Acesse as principais funções de sua conta"
+            >
+              ?
+            </div>
+          </h3>
+          <div class="menu-item">
+            <a href="perfil.html">Meu Perfil</a>
+            <span class="tooltip">Acesse e gerencie seu perfil pessoal</span>
+          </div>
+          <div class="menu-item">
+            Meus Amigos
+            <span class="tooltip">Veja e gerencie sua lista de amigos</span>
+          </div>
+          <div class="menu-item">
+            Minhas Comunidades
+            <span class="tooltip"
+              >Acesse as comunidades das quais você participa</span
+            >
+          </div>
+          <div class="menu-item">
+            Meus Álbuns
+            <span class="tooltip">Gerencie suas coleções de fotos</span>
+          </div>
+          <div class="menu-item">
+            Meus Recados
+            <span class="tooltip"
+              >Veja mensagens deixadas por outros usuários</span
+            >
+          </div>
+          <div class="menu-item">
+            Meus Depoimentos
+            <span class="tooltip"
+              >Gerencie depoimentos recebidos e enviados</span
+            >
+          </div>
+          <div class="menu-item">
+            Configurações
+            <span class="tooltip">Personalize suas preferências de conta</span>
+          </div>
+        </div>
+
+        <div class="content">
+          <div class="card">
+            <h2>
+              Comunidades em Destaque
+              <div
+                class="help-icon"
+                title="Comunidades populares recomendadas para você"
+              >
+                ?
+              </div>
+            </h2>
+            <p>Aqui serão exibidas as comunidades em destaque na plataforma.</p>
+            <div style="margin-top: 15px; text-align: center">
+              <button class="btn-primary">Ver Todas as Comunidades</button>
+            </div>
+          </div>
+
+          <div class="card">
+            <h2>
+              Atividades Recentes
+              <div
+                class="help-icon"
+                title="Últimas interações e atualizações da sua rede"
+              >
+                ?
+              </div>
+            </h2>
+            <p>
+              Fique por dentro das últimas novidades de seus amigos e
+              comunidades.
+            </p>
+          </div>
+        </div>
+
+        <div class="sidebar">
+          <h3>
+            Atividades Recentes
+            <div class="help-icon" title="Últimas interações na plataforma">
+              ?
+            </div>
+          </h3>
+          <div class="menu-item">
+            João comentou na Comunidade Tecnologia
+            <span class="tooltip">Publicado há 30 minutos</span>
+          </div>
+          <div class="menu-item">
+            Maria enviou um recado para você
+            <span class="tooltip">Publicado há 1 hora</span>
+          </div>
+          <div class="menu-item">
+            Carlos aceitou seu pedido de amizade
+            <span class="tooltip">Aconteceu há 2 horas</span>
+          </div>
+          <div class="menu-item">
+            Nova foto adicionada ao seu álbum
+            <span class="tooltip">Adicionada há 3 horas</span>
+          </div>
+
+          <h3 style="margin-top: 20px">
+            Amigos Online
+            <div class="help-icon" title="Amigos conectados neste momento">
+              ?
+            </div>
+          </h3>
+          <div class="menu-item">
+            Pedro
+            <span class="tooltip">Online há 10 minutos</span>
+          </div>
+          <div class="menu-item">
+            Ana
+            <span class="tooltip">Online há 5 minutos</span>
+          </div>
+          <div class="menu-item">
+            Lucas
+            <span class="tooltip">Online há 1 minuto</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer">
+        <p>© 2025 Meu Linka - Todos os direitos reservados</p>
+      </div>
+    </div>
+
+    <script>
+      const hamburgerIcon = document.getElementById('hamburger-icon');
+      const closeMenu = document.getElementById('close-menu');
+      const hamburgerMenu = document.getElementById('hamburger-menu');
+      const overlay = document.getElementById('overlay');
+
+      hamburgerIcon.addEventListener('click', function () {
+        hamburgerMenu.classList.add('active');
+        overlay.classList.add('active');
+      });
+
+      closeMenu.addEventListener('click', function () {
+        hamburgerMenu.classList.remove('active');
+        overlay.classList.remove('active');
+      });
+
+      overlay.addEventListener('click', function () {
+        hamburgerMenu.classList.remove('active');
+        overlay.classList.remove('active');
+      });
+    </script>
+  </body>
+</html>

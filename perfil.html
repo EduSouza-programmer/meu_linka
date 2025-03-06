@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil - MeuLinka</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #6a5af9 0%, #b56fe8 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background-color: #ffffff;
+            color: #6a5af9;
+            padding: 15px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        a {
+            text-decoration: none;
+        }
+        
+        .logo {
+        text-decoration: none; /* Remove o sublinhado do link */
+        color: #6a5af9; /* Mantém a cor da logo */
+        font-size: 24px;
+        font-weight: bold;
+      }
+        
+        .search-bar {
+            flex-grow: 1;
+            margin: 0 20px;
+        }
+        
+        .search-bar input {
+            width: 100%;
+            padding: 10px 15px;
+            border-radius: 20px;
+            border: 1px solid #e0e0e0;
+            background-color: #f8f9fa;
+        }
+        
+        .search-bar input:focus {
+            outline: none;
+            border-color: #6a5af9;
+            box-shadow: 0 0 0 2px rgba(106, 90, 249, 0.2);
+        }
+        
+        .user-menu {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .user-menu button {
+            background-color: #6a5af9;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 14px;
+            padding: 8px 16px;
+            border-radius: 20px;
+            transition: background-color 0.3s;
+        }
+        
+        .user-menu button:hover {
+            background-color: #5346d7;
+        }
+        
+        .banner {
+            background-color: white;
+            padding: 15px;
+            text-align: center;
+            border-radius: 8px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            border-left: 4px solid #6a5af9;
+            color: #6a5af9;
+        }
+        
+        .profile-content {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 20px;
+        }
+        
+        .profile-sidebar {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            height: fit-content;
+        }
+        
+        .profile-photo {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background-color: #f0f2f5;
+            margin: 0 auto 20px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 3px solid #6a5af9;
+        }
+        
+        .profile-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .profile-photo .upload-icon {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            background-color: #6a5af9;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        
+        .profile-photo .upload-icon:hover {
+            background-color: #5346d7;
+        }
+        
+        .profile-name {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .profile-name h2 {
+            color: #6a5af9;
+            margin-bottom: 5px;
+        }
+        
+        .profile-name p {
+            color: #777;
+            font-size: 14px;
+        }
+        
+        .profile-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .stat {
+            flex: 1;
+            padding: 10px;
+        }
+        
+        .stat h3 {
+            color: #6a5af9;
+            margin-bottom: 5px;
+            font-size: 18px;
+        }
+        
+        .stat p {
+            color: #777;
+            font-size: 12px;
+        }
+        
+        .profile-menu {
+            margin-top: 20px;
+        }
+        
+        .profile-menu-item {
+            padding: 12px 15px;
+            border-radius: 5px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            color: #333;
+            font-weight: 500;
+        }
+        
+        .profile-menu-item.active {
+            background-color: #6a5af9;
+            color: white;
+        }
+        
+        .profile-menu-item:hover {
+            background-color: #f0f2f5;
+        }
+        
+        .profile-menu-item.active:hover {
+            background-color: #5346d7;
+        }
+        
+        .profile-main {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+        
+        .card h2 {
+            color: #6a5af9;
+            margin-bottom: 20px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .card .section-title {
+            font-size: 16px;
+            color: #6a5af9;
+            margin: 15px 0 10px;
+            font-weight: 600;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 10px 15px;
+            border-radius: 5px;
+            border: 1px solid #e0e0e0;
+            background-color: #f8f9fa;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: #6a5af9;
+            box-shadow: 0 0 0 2px rgba(106, 90, 249, 0.2);
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .form-row .form-group {
+            flex: 1;
+            margin-bottom: 0;
+        }
+        
+        .social-input {
+            display: flex;
+            align-items: center;
+        }
+        
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #f0f2f5;
+            border-radius: 5px 0 0 5px;
+            color: #6a5af9;
+        }
+        
+        .social-input input {
+            border-radius: 0 5px 5px 0;
+            border-left: none;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border-radius: 20px;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        
+        .btn-primary {
+            background-color: #6a5af9;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: #5346d7;
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid #6a5af9;
+            color: #6a5af9;
+        }
+        
+        .btn-outline:hover {
+            background-color: #f0f2f5;
+        }
+        
+        .btn-danger {
+            background-color: #ff4757;
+            color: white;
+        }
+        
+        .btn-danger:hover {
+            background-color: #e33b48;
+        }
+        
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .delete-section {
+            border-top: 1px solid #e0e0e0;
+            margin-top: 30px;
+            padding-top: 20px;
+        }
+        
+        .delete-section h3 {
+            color: #ff4757;
+            margin-bottom: 15px;
+        }
+        
+        .delete-section p {
+            color: #777;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+        
+        .hamburger-icon {
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            width: 24px;
+            height: 24px;
+            margin-right: 15px;
+        }
+        
+        .hamburger-icon span {
+            display: block;
+            height: 3px;
+            width: 100%;
+            background-color: #6a5af9;
+            border-radius: 3px;
+        }
+        
+        .footer {
+            margin-top: 30px;
+            text-align: center;
+            color: white;
+            font-size: 14px;
+            padding: 20px 0;
+        }
+        
+        /* Confirmation Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            overflow: auto;
+        }
+        
+        .modal-content {
+            background-color: white;
+            margin: 15% auto;
+            padding: 20px;
+            border-radius: 8px;
+            width: 400px;
+            max-width: 90%;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .modal-header {
+            padding: 10px 0;
+            border-bottom: 1px solid #e0e0e0;
+            margin-bottom: 15px;
+        }
+        
+        .modal-header h3 {
+            color: #ff4757;
+        }
+        
+        .modal-body {
+            padding: 10px 0;
+            margin-bottom: 15px;
+        }
+        
+        .modal-footer {
+            padding: 10px 0;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+        
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        .close:hover {
+            color: #555;
+        }
+        
+        /* File upload hidden input */
+        #photo-upload {
+            display: none;
+        }
+        
+        @media (max-width: 768px) {
+            .profile-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-row {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .form-row .form-group {
+                margin-bottom: 0;
+            }
+        }
+
+        /* Snackbar */
+    #snackbar {
+        visibility: hidden;
+        min-width: 300px;
+        background-color: transparent;
+        position: fixed;
+        z-index: 1000;
+        right: -100%; /* Começa fora da tela à direita */
+        top: 20px;
+        transition: right 0.5s ease-in-out;
+    }
+
+    #snackbar.show {
+        visibility: visible;
+        right: 20px; /* Move para dentro da tela */
+    }
+
+    .snackbar-card {
+        background-color: #6a5af9; /* Cor da paleta */
+        color: white;
+        padding: 16px;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .snackbar-card span {
+        font-size: 14px;
+        font-weight: 500;
+    }
+    </style>
+</head>
+<body>
+    <!-- Snackbar -->
+    <div id="snackbar">
+        <div class="snackbar-card">
+            <span>Perfil salvo com sucesso!</span>
+    </div>
+    </div>    
+    <header>
+        <div class="header-content">
+            <div style="display: flex; align-items: center;">
+                <div class="hamburger-icon">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <a href="home.html" class="logo">Meu Linka</a>
+            </div>
+            <div class="search-bar">
+                <input type="text" placeholder="Buscar colaborador ou comunidade...">
+            </div>
+            <div class="user-menu">
+                <button>Perfil</button>
+                <button>Login</button>
+            </div>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="banner">
+            Gerencie seu perfil e mantenha suas informações atualizadas!
+        </div>
+        
+        <div class="profile-content">
+            <div class="profile-sidebar">
+                <div class="profile-photo">
+                    <img id="profile-image" src="https://edu-zapt-storybook.netlify.app/img/users/avatar_2.jpg" alt="Foto de perfil">
+                    <label for="photo-upload" class="upload-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            <polyline points="17 8 12 3 7 8"></polyline>
+                            <line x1="12" y1="3" x2="12" y2="15"></line>
+                        </svg>
+                    </label>
+                    <input type="file" id="photo-upload" accept="image/*">
+                </div>
+                
+                <div class="profile-name">
+                    <h2>Nome do Usuário</h2>
+                    <p id="user-title">Cargo do Usuário</p>
+                </div>
+                
+                <div class="profile-stats">
+                    <div class="stat">
+                        <h3>125</h3>
+                        <p>Amigos</p>
+                    </div>
+                    <div class="stat">
+                        <h3>48</h3>
+                        <p>Comunidades</p>
+                    </div>
+                    <div class="stat">
+                        <h3>230</h3>
+                        <p>Recados</p>
+                    </div>
+                </div>
+                
+                <div class="profile-menu">
+                    <div class="profile-menu-item active">Editar Perfil</div>
+                    <div class="profile-menu-item">Álbuns de Fotos</div>
+                    <div class="profile-menu-item">Recados</div>
+                    <div class="profile-menu-item">Depoimentos</div>
+                    <div class="profile-menu-item">Configurações</div>
+                </div>
+            </div>
+            
+            <div class="profile-main">
+                <div class="card">
+                    <h2>
+                        Informações do Perfil
+                        <button class="btn btn-outline" id="cancel-btn">Cancelar</button>
+                    </h2>
+                    
+                    <form id="profile-form">
+                        <div class="form-group">
+                            <label for="name">Nome Completo</label>
+                            <input type="text" class="form-control" id="name" value="Nome do Usuário">
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="city">Cidade</label>
+                                <input type="text" class="form-control" id="city" placeholder="Sua cidade">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="country">País</label>
+                                <input type="text" class="form-control" id="country" placeholder="Seu país">
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="birthday">Data de Nascimento</label>
+                                <input type="date" class="form-control" id="birthday">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="job-title">Cargo/Profissão</label>
+                                <input type="text" class="form-control" id="job-title" placeholder="Seu cargo ou profissão">
+                            </div>
+                        </div>
+                        
+                        <div class="section-title">Redes Sociais</div>
+                        
+                        <div class="form-group">
+                            <label for="instagram">Instagram</label>
+                            <div class="social-input">
+                                <div class="social-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                                        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                                        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                                    </svg>
+                                </div>
+                                <input type="text" class="form-control" id="instagram" placeholder="Seu nome de usuário do Instagram">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="linkedin">LinkedIn</label>
+                            <div class="social-input">
+                                <div class="social-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                                        <rect x="2" y="9" width="4" height="12"></rect>
+                                        <circle cx="4" cy="4" r="2"></circle>
+                                    </svg>
+                                </div>
+                                <input type="text" class="form-control" id="linkedin" placeholder="Seu perfil do LinkedIn">
+                            </div>
+                        </div>
+                        
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary" id="save-btn">Salvar Alterações</button>
+                        </div>
+                        
+                        <div class="delete-section">
+                            <h3>Excluir Perfil</h3>
+                            <p>Atenção: A exclusão do perfil é irreversível. Todos os seus dados, amigos, recados e depoimentos serão permanentemente removidos.</p>
+                            <button type="button" class="btn btn-danger" id="delete-btn">Excluir Meu Perfil</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>© 2025 MeuLinka - Todos os direitos reservados</p>
+        </div>
+    </div>
+    
+    <!-- Confirmation Modal -->
+    <div id="delete-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="close">&times;</span>
+                <h3>Confirmar Exclusão</h3>
+            </div>
+            <div class="modal-body">
+                <p>Tem certeza que deseja excluir seu perfil? Esta ação não pode ser desfeita.</p>
+                <p>Todos os seus dados serão permanentemente apagados do sistema.</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" id="cancel-delete">Cancelar</button>
+                <button class="btn btn-danger" id="confirm-delete">Sim, Excluir</button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Get DOM elements
+        const photoUpload = document.getElementById('photo-upload');
+        const profileImage = document.getElementById('profile-image');
+        const profileForm = document.getElementById('profile-form');
+        const saveBtn = document.getElementById('save-btn');
+        const cancelBtn = document.getElementById('cancel-btn');
+        const deleteBtn = document.getElementById('delete-btn');
+        const deleteModal = document.getElementById('delete-modal');
+        const cancelDelete = document.getElementById('cancel-delete');
+        const confirmDelete = document.getElementById('confirm-delete');
+        const closeModal = document.querySelector('.close');
+        const jobTitle = document.getElementById('job-title');
+        const userTitle = document.getElementById('user-title');
+        
+        // Form original values for cancel operation
+        let originalFormData = {};
+        
+        // Save original form data
+        function saveOriginalFormData() {
+            const formElements = profileForm.elements;
+            for (let i = 0; i < formElements.length; i++) {
+                if (formElements[i].id) {
+                    originalFormData[formElements[i].id] = formElements[i].value;
+                }
+            }
+        }
+        
+        // Restore original form data
+        function restoreOriginalFormData() {
+            for (const [id, value] of Object.entries(originalFormData)) {
+                const element = document.getElementById(id);
+                if (element) {
+                    element.value = value;
+                }
+            }
+        }
+        
+        // Update profile data
+        function updateProfile(event) {
+            event.preventDefault();
+            
+            // Update job title display
+            if (jobTitle.value) {
+                userTitle.textContent = jobTitle.value;
+            }
+            
+            // Save form data as new original
+            saveOriginalFormData();
+            
+            // Show success notification (could be enhanced)
+            alert('Perfil atualizado com sucesso!');
+        }
+        
+        // Handle photo upload
+        photoUpload.addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    profileImage.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+        
+        // Save button click
+        profileForm.addEventListener('submit', updateProfile);
+        
+        // Cancel button click
+        cancelBtn.addEventListener('click', function(event) {
+            event.preventDefault();
+            restoreOriginalFormData();
+        });
+        
+        // Delete button click - show modal
+        deleteBtn.addEventListener('click', function() {
+            deleteModal.style.display = 'block';
+        });
+        
+        // Modal close button
+        closeModal.addEventListener('click', function() {
+            deleteModal.style.display = 'none';
+        });
+        
+        // Cancel delete button
+        cancelDelete.addEventListener('click', function() {
+            deleteModal.style.display = 'none';
+        });
+        
+        // Confirm delete button
+        confirmDelete.addEventListener('click', function() {
+            // This would typically make an API call to delete the profile
+            alert('Perfil excluído com sucesso. Você será redirecionado para a página inicial.');
+            // Redirect to home page or logout
+            window.location.href = 'index.html';
+        });
+        
+        // Close modal if clicking outside
+        window.addEventListener('click', function(event) {
+            if (event.target === deleteModal) {
+                deleteModal.style.display = 'none';
+            }
+        });
+        
+        // Initialize by saving original form data
+        document.addEventListener('DOMContentLoaded', function() {
+            saveOriginalFormData();
+        });
+
+        function updateProfile(event) {
+            event.preventDefault();
+            
+            // Update job title display
+            if (jobTitle.value) {
+                userTitle.textContent = jobTitle.value;
+            }
+            
+            // Save form data as new original
+            saveOriginalFormData();
+            
+            // Show snackbar
+            const snackbar = document.getElementById('snackbar');
+            snackbar.classList.add('show');
+            
+            // Redirect to home.html after 3 seconds
+            setTimeout(function() {
+                window.location.href = 'home.html';
+            }, 2000);
+        }
+    </script>
+</body>
+</html>
